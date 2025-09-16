@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: trekify-dotnet-api
+    runtime: docker
+    plan: free
+    region: ohio
+    branch: main
+    dockerfilePath: ./Trekify.API/Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:$PORT
+      - key: ASPNETCORE_ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: trekify-db
+          property: connectionString
+    buildCommand: |
+      cd Trekify.API
+      dotnet publish -c Release -o ./publish
+
+databases:
+  - name: trekify-db
+    databaseName: trekifydb
+    user: trekify_user
+    plan: free
+    region: ohio
