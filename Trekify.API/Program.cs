@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 
 // Configure Entity Framework
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configure JWT Authentication
 var jwtSecret = builder.Configuration["JwtSettings:Secret"];
@@ -47,6 +47,7 @@ builder.Services.AddCors(options =>
 // Register services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
+builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -85,6 +86,20 @@ app.MapGet("/", () => new
     message = "Trekify API Running",
     version = "1.0.0",
     environment = app.Environment.EnvironmentName
+});
+
+// Database health check endpoint
+app.MapGet("/health/database", async (IDatabaseService databaseService) =>
+{
+    var canConnect = await databaseService.CanConnectAsync();
+    var info = await databaseService.GetDatabaseInfoAsync();
+    
+    return Results.Ok(new
+    {
+        success = canConnect,
+        message = canConnect ? "Database connection successful" : "Database connection failed",
+        details = info
+    });
 });
 
 app.Run();
