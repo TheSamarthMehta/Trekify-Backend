@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Trekify.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d022983693b3e09980ac3e654ace4c7b8d7c921")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4f838c6a6a5e26429a1ea9097381a0e4facd463b")]
 [assembly: System.Reflection.AssemblyProductAttribute("Trekify.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Trekify.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
